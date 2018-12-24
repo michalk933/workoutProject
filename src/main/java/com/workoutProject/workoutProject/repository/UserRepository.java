@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUserName(String userName);
+    User findByUsername(String username);
 
     @Query(
-            value = "SELECT EXISTS( SELECT 1 FROM public.users WHERE user_name = ?1)",
+            value = "SELECT EXISTS( SELECT 1 FROM public.users WHERE username = ?1)",
             nativeQuery = true
     )
-    boolean isExist(String userName);
+    boolean isExist(String username);
 
 }
