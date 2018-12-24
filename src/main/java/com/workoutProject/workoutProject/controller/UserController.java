@@ -47,6 +47,6 @@ public class UserController {
 
     @GetMapping("/get")
     public String testUser(){
-        return userService.getUserByUserName("acc1").getUserName();
+        return userService.getUserByUserName("acc1").getUsername();
     }
 }

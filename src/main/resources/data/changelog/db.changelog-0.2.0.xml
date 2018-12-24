@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="2" author="michalk">
+        <createTable tableName="oauth_client_details">
+            <column name="client_id" type="varchar(255)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="resource_ids" type="varchar(256)"/>
+            <column name="client_secret" type="varchar(256)"/>
+            <column name="scope" type="varchar(256)"/>
+            <column name="authorized_grant_types" type="varchar(256)"/>
+            <column name="web_server_redirect_uri" type="varchar(256)"/>
+            <column name="authorities" type="varchar(256)"/>
+            <column name="access_token_validity" type="int"/>
+            <column name="refresh_token_validity" type="int"/>
+            <column name="additional_information" type="varchar(4096)"/>
+            <column name="autoapprove" type="varchar(256)"/>
+        </createTable>
+
+
+        <createTable tableName="permission">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+
+
+        <createTable tableName="role">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(256)" >
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+
+
+        <createTable tableName="permission_role">
+            <column name="permission_id" type="BIGINT">
+                <constraints foreignKeyName="fk_permission_id" references="permission(id)"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints foreignKeyName="fk_role_id" references="role(id)"/>
+            </column>
+        </createTable>
+
+
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar(24)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="enabled" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_expired" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credentials_expired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_locked" type="BOOLEAN">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+
+        <createTable tableName="role_user">
+            <column name="role_id" type="BIGINT">
+                <constraints foreignKeyName="fk_role_id" references="role(id)"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints foreignKeyName="fk_user_id" references="user(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
