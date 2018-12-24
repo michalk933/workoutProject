@@ -7,14 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.workoutProject.workoutProject.util.RequestMappingPath.BASE_PATH;
+import static com.workoutProject.workoutProject.util.RequestMappingPath.TEST_PATH;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping(BASE_PATH)
 public class testController {
 
     Logger log = LoggerFactory.getLogger(testController.class);
 
-    @GetMapping("/test")
-    public String getTest(){
+    @GetMapping(TEST_PATH)
+    public String getTest() {
         log.debug("LOG TEST CONTROLLER");
         return "TEST CONTROLLER";
     }
